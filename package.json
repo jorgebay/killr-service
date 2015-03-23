@@ -1,0 +1,24 @@
+{
+  "name": "killr-service",
+  "version": "0.0.1",
+  "author": "DataStax",
+  "dependencies": {
+    "async": "^0.9.0",
+    "express": "^4.1.2",
+    "cassandra-driver": "^2.0.0",
+    "body-parser": "^1.12.2"
+  },
+  "licenses": [
+    {
+      "type": "Apache License, Version 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/jorgebay/killr-service.git"
+  },
+  "engines": {
+    "node" : ">=0.10.0"
+  }
+}
