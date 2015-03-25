@@ -11,6 +11,10 @@ var client = new cassandra.Client({
   keyspace: 'killrvideo'
 });
 var bus = new Bus();
+bus.on('video-deleted', function (videoId) {
+  //A sample, we could use an "video deleted" event
+  // to do something like clear an internal state
+});
 var repository = new Repository(client, bus);
 
 var app = express();
@@ -18,13 +22,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/', function (req, res) {
   res.send('Service running');
 });
-app.get('/comments/:videoId([a-f0-9\\-]{36})', function (req, res, next) {
+app.get('/v1/comments/:videoId([a-f0-9\\-]{36})', function (req, res, next) {
   repository.getCommentsByVideo(req.params.videoId, function (err, comments) {
     if (err) return next(err);
     res.json(comments);
   });
 });
-app.post('/comments/:videoId([a-f0-9\\-]{36})/insert', function (req, res, next) {
+app.post('/v1/comment/:videoId([a-f0-9\\-]{36})', function (req, res, next) {
   repository.insertComment(req.params.videoId, req.body.userId, req.body.comment, function (err, id) {
     if (err) return next(err);
     res.send(id.toString());

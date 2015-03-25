@@ -2,7 +2,7 @@
 var cassandra = require('cassandra-driver');
 
 var cql = {
-  selectCommentsByVideo: "SELECT videoid, commentid, userid, comment FROM comments_by_video WHERE videoid = ?",
+  selectCommentsByVideo: 'SELECT videoid, commentid, userid, comment FROM comments_by_video WHERE videoid = ?',
   insertCommentByVideo: 'INSERT INTO comments_by_video (videoid, commentid, userid, comment) VALUES (?, ?, ?, ?)',
   insertCommentByUser: 'INSERT INTO comments_by_user (userid, commentid, videoid, comment) VALUES (?, ?, ?, ?)'
 };
