@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/', function (req, res) {
   res.send('Service running');
 });
-app.get('/v1/comments/:videoId([a-f0-9\\-]{36})', function (req, res, next) {
+app.get('/v1/comment/:videoId([a-f0-9\\-]{36})', function (req, res, next) {
   repository.getCommentsByVideo(req.params.videoId, function (err, comments) {
     if (err) return next(err);
     res.json(comments);
@@ -34,10 +34,21 @@ app.post('/v1/comment/:videoId([a-f0-9\\-]{36})', function (req, res, next) {
     res.send(id.toString());
   });
 });
-
+app.get('/v1/rating/:videoId([a-f0-9\\-]{36})', function (req, res, next) {
+  repository.getRating(req.params.videoId, function (err, rating) {
+    if (err) return next(err);
+    res.json(rating);
+  });
+});
+app.post('/v1/rating/:videoId([a-f0-9\\-]{36})', function (req, res, next) {
+  repository.setRating(req.params.videoId, req.body.userId, req.body.value, function (err) {
+    if (err) return next(err);
+    res.end();
+  });
+});
 client.connect(function (err) {
   if (err) {
-    console.error('Cassandra driver was not initially able to connect to %s: %s', contactPoint, err);
+    console.error('Cassandra driver was not able to connect to %s: %s', contactPoint, err);
   }
   var server = app.listen(8080, function () {
     console.log('App listening at http://%s:%s', 'localhost', server.address().port);
